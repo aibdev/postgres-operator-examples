@@ -15,7 +15,7 @@
 # available as one of the "RELATED_IMAGE_POSTGRES_..." images as part of the PGO
 # installation if you want to deploy the image without setting the "postgres"
 # image variable. This value is required.
-postgresVersion: 14
+postgresVersion: 13
 
 # postGISVersion if sets and coupled with a PostGIS enabled container, enables
 # PostGIS. This version number needs to be available as one of the
@@ -67,11 +67,11 @@ postgresVersion: 14
 
 # instanceName lets you set the name of your instances. This defaults to
 # the value below. Setting "instances" overrides this value.
-# instanceName: instance1
+instanceName: aib-db
 
 # instanceSize sets the size of the volume that contains the data. This defaults
 # to the value below. Settings "instances" overrides this value.
-# instanceSize: 1Gi
+instanceSize: 5Gi
 
 # instanceMemory sets the memory limit for the Postgres instances. This defaults
 # to no limit being set, but an example value is set below. Settings "instances"
@@ -128,7 +128,12 @@ postgresVersion: 14
 
 # users sets any custom Postgres users and databases that they have  access to
 # as well as any permossions assoicated with the user account.
-# users: {}
+users:
+  - name: aib
+    databases:
+      - aibcc
+      - aibflow
+    options: "SUPERUSER"
 
 # dataSource specifies a data source for bootstrapping a Postgres cluster.
 # dataSource: {}
@@ -145,9 +150,9 @@ postgresVersion: 14
 
 # databaseInitSQL referencs a ConfigMap that contains a SQL file that should be
 # run a cluster bootstrap.
-# databaseInitSQL:
-#   name: bootstrap-sql
-#   key: bootstrap.sql
+#databaseInitSQL:
+#  name: bootstrap-sql
+#  key: bootstrap.sql
 
 # standby sets whether or not to run this as a standby cluster. Both of the
 # values below are required to enable a standby cluster. Setting "enabled" to
